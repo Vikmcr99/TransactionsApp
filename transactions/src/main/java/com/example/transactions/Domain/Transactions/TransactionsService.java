@@ -1,6 +1,7 @@
 package com.example.transactions.Domain.Transactions;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,15 @@ public class TransactionsService {
 	
 	@Transactional(readOnly = true)
 	public Transactions getById(Long id) {
-		return repository.findById(id).get();
+		Optional<Transactions> transactionResponse = repository.findById(id);
+		
+		if (!transactionResponse.isPresent()) {
+				throw new RuntimeException("No record found for given id" + id);
+			}
+		
+		return transactionResponse.get();
 	}
+		
 	
 	public List<Transactions> getAllTransactions(){
 		List<Transactions> result = repository.findAll();

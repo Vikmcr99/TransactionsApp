@@ -1,10 +1,12 @@
 package com.example.transactions.Domain.Merchant;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 
 @Service
@@ -15,7 +17,13 @@ public class MerchantService {
 	@Transactional(readOnly = true)
 	public Merchant getById(Long id) {
 		
-		return repository.findById(id).get();
+		Optional<Merchant> merchantResponse = repository.findById(id);
+		
+		if (!merchantResponse.isPresent()) {
+				throw new RuntimeException("No record found for given id" + id);
+			}
+		
+		return merchantResponse.get();
 	}
 	
 	public List<Merchant> getAllMerchants(){
