@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.transactions.RecordNotFoundException;
+
 
 @Service
 public class TransactionsService {
@@ -20,7 +22,7 @@ public class TransactionsService {
 		Optional<Transactions> transactionResponse = repository.findById(id);
 		
 		if (!transactionResponse.isPresent()) {
-				throw new RuntimeException("No record found for given id" + id);
+				throw new RecordNotFoundException("No record found for given id" + id);
 			}
 		
 		return transactionResponse.get();
