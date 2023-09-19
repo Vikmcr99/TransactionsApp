@@ -48,6 +48,19 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         
+        <dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.13.2</version><!--$NO-MVN-MAN-VER$-->
+		    <scope>test</scope>
+		</dependency>
+
+
+        <dependency>
+        	<groupId>com.example</groupId>
+        	<artifactId>JPAexamples</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
 	</dependencies>
 
 	<build>

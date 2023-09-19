@@ -1,7 +1,6 @@
 package com.example.transactions.Domain.Transactions;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.transactions.Advice.UnauthorizedException;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -35,22 +36,13 @@ public class TransactionsController {
         }
         
         return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
-
 	}
 	
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Transactions> findById (@PathVariable ("id") Long id){
-		try {
-            Transactions transaction = service.getById(id);
-
-            return new ResponseEntity<Transactions>(transaction, HttpStatus.OK);
-        } 
-		
-		catch (NoSuchElementException ns) {
-            return new ResponseEntity<Transactions>(HttpStatus.NOT_FOUND);
-        }
-	
+        Transactions transaction = service.getById(id);
+        return new ResponseEntity<Transactions>(transaction, HttpStatus.OK); 
 	}
 	
 	@PostMapping
@@ -70,7 +62,7 @@ public class TransactionsController {
         } 
         
         else {
-        	return new ResponseEntity<Transactions>(HttpStatus.UNAUTHORIZED);
+        	throw new UnauthorizedException("Unauthorized");	
         }
     }
 	

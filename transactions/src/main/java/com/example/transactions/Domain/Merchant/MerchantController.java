@@ -1,7 +1,7 @@
 package com.example.transactions.Domain.Merchant;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,15 +37,8 @@ public class MerchantController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Merchant> findById (@PathVariable ("id")Long id){
-		try {
-			Merchant merchant = service.getById(id);
-			
-			return new ResponseEntity<Merchant>(merchant, HttpStatus.OK);
-		}
-		
-		catch (NoSuchElementException ns) {
-			return new ResponseEntity<Merchant>(HttpStatus.NOT_FOUND);
-		}
+		Merchant merchant = service.getById(id);
+		return new ResponseEntity<Merchant>(merchant, HttpStatus.OK);
 	}
 	
 	@PostMapping
